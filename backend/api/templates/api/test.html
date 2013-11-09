@@ -12,7 +12,7 @@ $.get('/api/recommend_hit_groups', {msg: JSON.stringify(x)}, function(data) {
 });
 console.log('heyhey');
 
-var feedback = {group_id: 'maw', worker_id: 'moe', vote: 'yea'};
+var feedback = {group_id: 'maw', worker_id: 'moe', vote: 'nay'};
 $.get('/api/feedback', {msg: JSON.stringify(feedback)}, function(data) {
   console.log(data);
 });
