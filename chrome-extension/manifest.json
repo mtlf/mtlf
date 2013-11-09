@@ -8,7 +8,7 @@
   "content_scripts": [
     {
       "matches": ["https://*/mturk/preview*"],
-      "js": ["js/jquery-1.10.1.min.js", "js/jquery.scoped.js", "js/bootstrap.min.js", "js/scraper.js", "mtlf.js"]
+      "js": ["js/jquery-1.10.1.min.js", "js/jquery.scoped.js", "js/bootstrap.min.js", "js/expandcollapse.js", "js/scraper.js", "mtlf.js"]
     }  		     
   ],
   

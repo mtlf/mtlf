@@ -108,6 +108,20 @@
 	}
     }
 
+
+
+
+
+
+    function getScrape() {
+        $.post('/api/recommend_hit_groups', {msg: JSON.stringify(make_json())},
+                function(data) {
+                    console.log(data);
+                    console.log('lydia is a monkey');
+                });
+    }
+
+    getScrape();
     loadModal();
 
 })();
