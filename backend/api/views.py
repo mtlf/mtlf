@@ -11,7 +11,7 @@ from django.views.decorators.http import require_http_methods
 import json
 import random
 
-@require_http_methods(["GET", "POST"])
+@require_http_methods(['GET'])
 def recommend_hit_groups(request):
   """
   Requests are of the form:
@@ -54,7 +54,7 @@ def recommend_hit_groups(request):
   return HttpResponse(json.dumps(response),
                       content_type="application/json")
 
-
+@require_http_methods(['GET'])
 def feedback(request):
   """
   Requests are of the form:
@@ -81,13 +81,15 @@ def feedback(request):
   return HttpResponse(json.dumps({'status': 'OK'}),
                       content_type="application/json")
 
-
+@require_http_methods(['GET'])
 def current_task(request):
   """
   Requests are of the form:
     {
-      'worker_id': 'XXX'
-      'group_id': 'XXX'
+      'msg': {
+        'worker_id': 'XXX'
+        'group_id': 'XXX'
+      }
     }
 
   Returns:
