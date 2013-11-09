@@ -40,7 +40,6 @@ function task_details(tab){
         "expiration_date":expiration_date,
         "keywords":keywords,
         "requester_name":requester_name,
-        "task_url":first_url,
         "qualified":qual 
     };
           
