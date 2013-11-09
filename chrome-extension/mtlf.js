@@ -46,10 +46,6 @@
 	var buttons = $("<div>").attr("id", "buttons").addClass("row pad-top pad-bottom")
 	    .append($("<button>").addClass("btn btn-default pad-left")
 		    .attr("type", "button")
-		    .attr("id", "more_button")
-		    .text("Give me more of this task"))
-	    .append($("<button>").addClass("btn btn-default pad-left")
-		    .attr("type", "button")
 		    .attr("id", "new_button")
 		    .text("Recommend a new task"));
 	
@@ -100,11 +96,16 @@
     }
 
     function loadModal() {
-	var modalId = "MTLFModal";
-	var mltfModal = buildMltfModal(modalId);
-	getBootstrapScope().append(mltfModal);
-	$("#" + modalId).modal();
-	$("#" + modalId).css("display", "block");
+	groupDoneStr = "There are no more available HITs";
+	alertMessageCond = $("#alertboxMessage").text().indexOf(groupDoneStr) == 0;
+	alertHeaderCond = $("#alertboxHeader").text().indexOf(groupDoneStr) == 0;
+	if (alertMessageCond || alertHeaderCond) {
+	    var modalId = "MTLFModal";
+	    var mltfModal = buildMltfModal(modalId);
+	    getBootstrapScope().append(mltfModal);
+	    $("#" + modalId).modal();
+	    $("#" + modalId).css("display", "block");
+	}
     }
 
     loadModal();
