@@ -37,3 +37,7 @@ nosetests.xml
 
 # Emacs files
 *~
+*#
+
+# Mac files
+.DS_Store

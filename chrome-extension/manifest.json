@@ -1,0 +1,26 @@
+{
+  "manifest_version": 2,
+
+  "name" : "MTLF",
+  "description" : "Lets Turkers rate tasks and get recommendations",
+  "version" : "0.1",
+
+  "content_scripts": [
+    {
+      "matches": ["https://*/mturk/preview*"],
+      "js": ["js/jquery-1.10.1.min.js", "js/jquery.scoped.js", "js/bootstrap.min.js", "mtlf.js"]
+    }  		     
+  ],
+  
+  "web_accessible_resources": [
+    "css/bootstrap.min.css",
+    "css/bootstrap-theme.min.css",
+    "css/mtlf.css",
+    "js/jquery-1.10.1.min.map",
+    "jquery-1.10.1.min.map",
+    "img/mtlf_logo_small.png",
+    "img/turker_dialog_up.gif",
+    "img/turker_dialog_down.gif"
+  ]
+
+}
