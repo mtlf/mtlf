@@ -1,0 +1,19 @@
+.modal-dialog {
+    width:700px;
+}
+
+.pad-left {
+    margin-left: 3em;
+}
+
+.pad-left-small {
+    margin-left: 1em;
+}
+
+.pad-top {
+    margin-top: 2em;	
+}
+
+.pad-bottom {
+    margin-bottom: 2em;	
+}
