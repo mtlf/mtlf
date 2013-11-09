@@ -7,7 +7,7 @@ class Worker(models.Model):
   
 class HitGroup(models.Model):
   group_id = models.CharField(max_length=100)
-  last_updated = models.DateTimeField()
+  last_updated = models.DateTimeField(null=True)
   details = models.TextField()
 
 
