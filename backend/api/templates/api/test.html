@@ -3,7 +3,7 @@
 <script src="http://code.jquery.com/jquery-2.0.3.min.js" type="text/javascript"></script>
 
 <script>
-var x = {available_groups: [{group_id: 'mooo'}, {group_id: 'maw'}]};
+var x = {worker_id: 'lydia', available_groups: [{group_id: 'mooo'}, {group_id: 'maw'}]};
 console.log(x);
 console.log('hey');
 $.get('/api/recommend_hit_groups', {msg: JSON.stringify(x)}, function(data) {

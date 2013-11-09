@@ -7,6 +7,7 @@ class Worker(models.Model):
   
 class HitGroup(models.Model):
   group_id = models.CharField(max_length=100)
+  last_updated = models.DateTimeField()
   details = models.TextField()
 
 
@@ -20,5 +21,5 @@ class CompletionHistory(models.Model):
   feedback = models.CharField(max_length=1, choices=FEEDBACK, null=True)
   
 
-class Requesters(models.Model):
+class Requester(models.Model):
   requester_id = models.CharField(max_length=100)
