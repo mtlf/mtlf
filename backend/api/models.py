@@ -19,6 +19,8 @@ class CompletionHistory(models.Model):
   worker = models.ForeignKey(Worker)
   group = models.ForeignKey(HitGroup)
   feedback = models.CharField(max_length=1, choices=FEEDBACK, null=True)
+CompletionHistory.INVERTED_FEEDBACK = (
+  dict((b, a) for a, b in CompletionHistory.FEEDBACK))
   
 
 class Requester(models.Model):
