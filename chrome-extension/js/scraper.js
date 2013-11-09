@@ -1,3 +1,4 @@
+initCollapseAllCapsules();
 
 function expand_tasks(){
     for (var i in Capsule.capsules) {
