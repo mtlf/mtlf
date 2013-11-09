@@ -106,17 +106,19 @@
 	    $("#" + modalId).modal();
 	    $("#" + modalId).css("display", "block");
 	    
-	    
-	$("#new_button").click(function() {
-	    console.log("test"); 
-	    $.get('/api/recommend_hit_groups', {msg: JSON.stringify(<<parsedListOfStuff>>)}, function( data ) {
-		var groupID = data[0];
+
+	    $("#new_button").click(function() {
+		console.log("test");
 		
-		var mturk_url; "https://workersandbox.mturk.com/mturk/preview?groupId=" + groupID;
-		window.location = mturk_url;
-	      });
-	});
-	    
+		$.get('/api/recommend_hit_groups', {msg: JSON.stringify([])}, function( data ) {
+		    console.log(data);
+		    var groupID = data[0];
+		    
+		    var mturk_url; "https://workersandbox.mturk.com/mturk/preview?groupId=" + groupID;
+		    window.location = mturk_url;
+		  });
+	    });
+		
 	}
     }
 
@@ -133,7 +135,7 @@
                 });
     }
 
-    //getScrape();
+    getScrape();
     loadModal();
 
 })();
