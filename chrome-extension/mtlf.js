@@ -24,20 +24,20 @@
     function getModalBody() {
 	var modal = $("<div>").attr("id", "popup").addClass("container");
 	var content = $("<div>").addClass("row pad-top")
-	    .append($("<label>").addClass("radio-inline col-md-3 pad-left")
+	    .append($("<label>").addClass("radio-inline col-md-3 pad-left").attr("id", "yea")
 		    .append($("<input>")
 			    .attr("type", "radio")
 			    .attr("name", "vote")
-			    .val("+"))
+			    .val("yea"))
 		    .append($("<img>")
 			    .attr("src", getLocalURL('img/turker_dialog_up.gif')))
 		    .append($("<span>").addClass("pad-left-small")
 			    .text("The task was engaging, I enjoyed it.")))
-	    .append($("<label>").addClass("radio-inline col-md-3")
+	    .append($("<label>").addClass("radio-inline col-md-3").attr("id", "nay")
 		    .append($("<input>")
 			    .attr("type", "radio")
 			    .attr("name", "vote")
-			    .val("-"))
+			    .val("nay"))
 		    .append($("<img>")
 			    .attr("src", getLocalURL('img/turker_dialog_down.gif')))
 		    .append($("<span>").addClass("pad-left-small")
@@ -48,6 +48,7 @@
 		    .attr("type", "button")
 		    .attr("id", "new_button")
 		    .text("Recommend a new task"));
+
 	
 	return modal.append(content, buttons);	 
 	    
@@ -92,7 +93,31 @@
 	    .attr("id", modalId)
 	    .append($("<div>").addClass("modal-dialog span8")
 		    .append(modalContent));
+
 	return modal;
+    }
+
+    function getWorkerId(callback) {
+	$.get('dashboard', {}, function(data) { 
+		console.log('data');
+		var spanText = $(data).filter("table").find("span:contains('Worker ID')").text();
+		var workerIdPattern = /Worker ID: (.*)$/;
+		var workerId = spanText.match(workerIdPattern)[1];
+		callback(workerId);
+	    });
+    }
+
+    function sendPrefs(prefsData) {
+	// add worker id to prefsData
+	getWorkerId(function(workerId) {
+		prefsData['worker_id'] = workerId;
+		$.get('http://127.0.0.1:8000/api/feedback', 
+		      {msg: JSON.stringify(prefsData)}, 
+		      function(data) {
+			  console.log(data);
+		      });
+	    });
+
     }
 
     function loadModal() {
@@ -100,9 +125,18 @@
 	alertMessageCond = $("#alertboxMessage").text().indexOf(groupDoneStr) == 0;
 	alertHeaderCond = $("#alertboxHeader").text().indexOf(groupDoneStr) == 0;
 	if (alertMessageCond || alertHeaderCond) {
+	    urlParams = getUrlParams();
 	    var modalId = "MTLFModal";
 	    var mltfModal = buildMltfModal(modalId);
 	    getBootstrapScope().append(mltfModal);
+	    $("#yea").click(function(){
+		    var prefsData = {group_id: urlParams['groupId'], vote: 'yea'}
+		    sendPrefs(prefsData);
+		});
+	    $("#nay").click(function() {
+		    var prefsData = {group_id: urlParams['groupId'], vote: 'nay'}
+		    sendPrefs(prefsData);
+		});
 	    $("#" + modalId).modal();
 	    $("#" + modalId).css("display", "block");
 	    
@@ -110,11 +144,11 @@
 	    $("#new_button").click(function() {
 		console.log("test");
 		
-		$.get('/api/recommend_hit_groups', {msg: JSON.stringify([])}, function( data ) {
+		$.get('http://127.0.0.1:8000/api/recommend_hit_groups', {msg: JSON.stringify([])}, function( data ) {
 		    console.log(data);
-		    var groupID = data[0];
+		    var groupID = data['suggested_groups'][0];
 		    
-		    var mturk_url; "https://workersandbox.mturk.com/mturk/preview?groupId=" + groupID;
+		    var mturk_url = "https://workersandbox.mturk.com/mturk/preview?groupId=" + groupID;
 		    window.location = mturk_url;
 		  });
 	    });
@@ -122,13 +156,8 @@
 	}
     }
 
-
-
-
-
-
     function getScrape() {
-        $.get('/api/recommend_hit_groups', {msg: JSON.stringify(make_json())},
+        $.get('http://127.0.0.1:8000/api/recommend_hit_groups', {msg: JSON.stringify(make_json())},
                 function(data) {
                     console.log(data);
                     console.log('lydia is a monkey');
