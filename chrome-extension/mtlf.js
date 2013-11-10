@@ -121,39 +121,33 @@
     }
 
     function loadModal() {
-	groupDoneStr = "There are no more available HITs";
-	alertMessageCond = $("#alertboxMessage").text().indexOf(groupDoneStr) == 0;
-	alertHeaderCond = $("#alertboxHeader").text().indexOf(groupDoneStr) == 0;
-	if (alertMessageCond || alertHeaderCond) {
-	    urlParams = getUrlParams();
-	    var modalId = "MTLFModal";
-	    var mltfModal = buildMltfModal(modalId);
-	    getBootstrapScope().append(mltfModal);
-	    $("#yea").click(function(){
-		    var prefsData = {group_id: urlParams['groupId'], vote: 'yea'}
-		    sendPrefs(prefsData);
-		});
-	    $("#nay").click(function() {
-		    var prefsData = {group_id: urlParams['groupId'], vote: 'nay'}
-		    sendPrefs(prefsData);
-		});
-	    $("#" + modalId).modal();
-	    $("#" + modalId).css("display", "block");
+	urlParams = getUrlParams();
+	var modalId = "MTLFModal";
+	var mltfModal = buildMltfModal(modalId);
+	getBootstrapScope().append(mltfModal);
+	$("#yea").click(function(){
+		var prefsData = {group_id: urlParams['groupId'], vote: 'yea'}
+		sendPrefs(prefsData);
+	    });
+	$("#nay").click(function() {
+		var prefsData = {group_id: urlParams['groupId'], vote: 'nay'}
+		sendPrefs(prefsData);
+	    });
+	$("#" + modalId).modal();
+	$("#" + modalId).css("display", "block");
 	    
-
-	    $("#new_button").click(function() {
+	
+	$("#new_button").click(function() {
 		console.log("test");
 		
 		$.get('http://127.0.0.1:8000/api/recommend_hit_groups', {msg: JSON.stringify([])}, function( data ) {
-		    console.log(data);
-		    var groupID = data['suggested_groups'][0];
-		    
-		    var mturk_url = "https://workersandbox.mturk.com/mturk/preview?groupId=" + groupID;
-		    window.location = mturk_url;
-		  });
+			console.log(data);
+			var groupID = data['suggested_groups'][0];
+			
+			var mturk_url = "https://workersandbox.mturk.com/mturk/preview?groupId=" + groupID;
+			window.location = mturk_url;
+		    });
 	    });
-		
-	}
     }
 
     function getScrape() {
@@ -164,7 +158,12 @@
                 });
     }
 
-    getScrape();
-    loadModal();
+    groupDoneStr = "There are no more available HITs";
+    alertMessageCond = $("#alertboxMessage").text().indexOf(groupDoneStr) == 0;
+    alertHeaderCond = $("#alertboxHeader").text().indexOf(groupDoneStr) == 0;
+    if (alertMessageCond || alertHeaderCond) {
+	getScrape();
+	loadModal();
+    }
 
 })();
