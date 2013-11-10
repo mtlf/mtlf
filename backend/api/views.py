@@ -40,8 +40,8 @@ def recommend_hit_groups(request):
     }
   """
   msg = json.loads(request.REQUEST['msg'])
-  available_groups = msg['available_groups']
-  worker, _ = Worker.objects.get_or_create(worker_id=msg['worker_id'])
+  available_groups = msg
+  #worker, _ = Worker.objects.get_or_create(worker_id=msg['worker_id'])
   for group_details in available_groups:
     details = json.dumps(group_details)
     group, _ = HitGroup.objects.get_or_create(group_id=group_details['group_id'])
@@ -49,8 +49,9 @@ def recommend_hit_groups(request):
       group.details = group_details
       group.last_updated = datetime.now()
       group.save()
-  random.shuffle(available_groups)
-  response = {'suggested_groups': [ag['group_id'] for ag in available_groups]}
+  all_groups = [hg for hg in HitGroup.objects.all()]
+  random.shuffle(all_groups)
+  response = {'suggested_groups': [g.group_id for g in all_groups]}
   return HttpResponse(json.dumps(response),
                       content_type="application/json")
 
